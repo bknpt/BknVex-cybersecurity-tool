@@ -1,0 +1,1466 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="BknVex Live Security Dashboard">
+<meta name="theme-color" content="#050505">
+
+<title>BknVex // Dashboard v1.2</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.dashboard-page {
+    min-height: 100vh;
+    padding: 140px 8% 80px;
+}
+
+.dashboard-header {
+    max-width: 1000px;
+    margin-bottom: 55px;
+}
+
+.dashboard-label {
+    color: var(--red);
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+    font-size: clamp(50px, 8vw, 100px);
+    line-height: .9;
+    letter-spacing: -5px;
+}
+
+.dashboard-header h1 span {
+    color: var(--red);
+}
+
+.dashboard-header p {
+    max-width: 700px;
+    margin-top: 25px;
+    color: #666;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.dashboard-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    padding: 10px 14px;
+    border: 1px solid #241111;
+    background: rgba(255,0,0,.03);
+    color: #888;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.dashboard-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 10px rgba(255,0,0,.8);
+}
+
+.dashboard-status-dot.offline {
+    background: #555;
+    box-shadow: none;
+}
+
+.dashboard-section-title {
+    max-width: 1200px;
+    margin-bottom: 18px;
+    color: #555;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* LIVE STATS */
+
+.live-grid {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 14px;
+    margin-bottom: 45px;
+}
+
+.live-card {
+    min-height: 170px;
+    padding: 28px;
+    background: rgba(7,7,7,.92);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.live-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #251010;
+}
+
+.live-label {
+    color: #555;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.live-value {
+    margin-top: 22px;
+    color: #eee;
+    font-family: monospace;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.live-value span {
+    color: var(--red);
+    font-size: 13px;
+}
+
+.live-detail {
+    margin-top: 10px;
+    color: #444;
+    font-family: monospace;
+    font-size: 9px;
+}
+
+.progress {
+    height: 3px;
+    margin-top: 20px;
+    background: #171717;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--red);
+    transition: width .5s ease;
+}
+
+/* INCIDENT PANEL */
+
+.incident-panel {
+    max-width: 1200px;
+    margin-bottom: 45px;
+    background: rgba(7,7,7,.94);
+    border: 1px solid var(--border);
+}
+
+.incident-summary {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    border-bottom: 1px solid #222;
+}
+
+.incident-count {
+    padding: 22px;
+    border-right: 1px solid #222;
+}
+
+.incident-count:last-child {
+    border-right: none;
+}
+
+.incident-count-label {
+    display: block;
+    color: #555;
+    font-family: monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.incident-count-value {
+    color: #ddd;
+    font-family: monospace;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.incident-count-value.high {
+    color: var(--red);
+}
+
+/* HIGH ALERT */
+
+.high-alert {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 22px;
+    border-bottom: 1px solid #441111;
+    background: rgba(255,0,0,.06);
+    color: var(--red);
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.high-alert.active {
+    display: flex;
+    animation: bknvexAlert 1s infinite alternate;
+}
+
+.high-alert-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--red);
+    border-radius: 50%;
+}
+
+@keyframes bknvexAlert {
+
+    from {
+        opacity: .45;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+/* INCIDENT FEED */
+
+.incident-feed {
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.incident-item {
+    padding: 18px 22px;
+    border-bottom: 1px solid #171717;
+    display: grid;
+    grid-template-columns: 90px 120px 1fr 80px;
+    gap: 15px;
+    align-items: center;
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.incident-item:last-child {
+    border-bottom: none;
+}
+
+.incident-time {
+    color: #444;
+}
+
+.incident-type {
+    color: #888;
+}
+
+.incident-message {
+    color: #aaa;
+}
+
+.incident-risk {
+    text-align: right;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.incident-risk.low {
+    color: #777;
+}
+
+.incident-risk.medium {
+    color: #aaa;
+}
+
+.incident-risk.high {
+    color: var(--red);
+    text-shadow: 0 0 8px rgba(255,0,0,.4);
+}
+
+.incident-empty {
+    padding: 30px 22px;
+    color: #444;
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* TOOLS */
+
+.tool-status-grid {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 12px;
+    margin-bottom: 45px;
+}
+
+.tool-status-card {
+    min-height: 85px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,7,7,.9);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: border-color .25s ease,transform .25s ease;
+}
+
+.tool-status-card:hover {
+    transform: translateY(-3px);
+    border-color: #3a1111;
+}
+
+.tool-number {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 8px;
+}
+
+.tool-name {
+    color: #aaa;
+    font-family: monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.tool-ready {
+    color: var(--red);
+    font-family: monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.tool-ready::before {
+    content: "• ";
+}
+
+/* TERMINAL */
+
+.dashboard-terminal {
+    max-width: 1200px;
+    background: #050505;
+    border: 1px solid #242424;
+    font-family: monospace;
+    margin-bottom: 40px;
+}
+
+.dashboard-terminal-top {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 15px;
+    border-bottom: 1px solid #222;
+}
+
+.terminal-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #333;
+}
+
+.terminal-dot:first-child {
+    background: var(--red);
+}
+
+.dashboard-terminal-title {
+    margin-left: 10px;
+    color: #555;
+    font-size: 9px;
+}
+
+.dashboard-terminal-body {
+    padding: 28px;
+    color: #777;
+    font-size: 11px;
+    line-height: 2.1;
+}
+
+.terminal-red {
+    color: var(--red);
+}
+
+.terminal-muted {
+    color: #444;
+}
+
+/* BACK */
+
+.back-dashboard {
+    display: inline-block;
+    padding: 13px 22px;
+    border: 1px solid #333;
+    color: #777;
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.back-dashboard:hover {
+    color: var(--red);
+    border-color: var(--red);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px) {
+
+    .live-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .tool-status-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px) {
+
+    .dashboard-page {
+        padding: 120px 6% 60px;
+    }
+
+    .live-grid,
+    .tool-status-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .incident-summary {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .incident-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .incident-risk {
+        text-align: left;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="rainCanvas"></canvas>
+
+<div class="noise"></div>
+
+<div class="scanlines"></div>
+
+<header class="navbar">
+
+<a href="index.html" class="brand">
+
+<span class="brand-cyrillic">Бкнпт</span>
+
+<span class="brand-divider">//</span>
+
+<span class="brand-latin">BKNVEX</span>
+
+</a>
+
+<button
+class="menu-button"
+id="menuButton"
+aria-label="Open navigation">
+
+<span></span>
+<span></span>
+<span></span>
+
+</button>
+
+<nav class="nav-links" id="navLinks">
+
+<a href="index.html">HOME</a>
+<a href="index.html#tools">TOOLS</a>
+<a href="index.html#projects">PROJECTS</a>
+<a href="index.html#about">ABOUT</a>
+<a href="index.html#contact">CONTACT</a>
+<a href="dashboard.html" class="dashboard-link">DASHBOARD</a>
+
+</nav>
+
+</header>
+
+<main class="dashboard-page">
+
+<section class="dashboard-header">
+
+<div class="dashboard-label">
+// BKNVEX SECURITY CONTROL v1.2
+</div>
+
+<h1>
+SYSTEM
+<span>DASHBOARD</span>
+</h1>
+
+<p>
+Live system telemetry, defensive security tools,
+and real-time security incident monitoring.
+</p>
+
+<div class="dashboard-status">
+
+<span
+class="dashboard-status-dot"
+id="statusDot">
+</span>
+
+<span id="systemStatus">
+CONNECTING TO LOCAL STATUS API...
+</span>
+
+</div>
+
+</section>
+
+<div class="dashboard-section-title">
+// LIVE SYSTEM TELEMETRY
+</div>
+
+<section class="live-grid">
+
+<article class="live-card">
+
+<div class="live-label">CPU USAGE</div>
+
+<div class="live-value" id="cpuValue">
+--<span>%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="cpuBar"></div>
+</div>
+
+<div class="live-detail" id="cpuDetail">
+WAITING FOR DATA
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">MEMORY</div>
+
+<div class="live-value" id="memoryValue">
+--<span>%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="memoryBar"></div>
+</div>
+
+<div class="live-detail" id="memoryDetail">
+WAITING FOR DATA
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">SYSTEM DISK</div>
+
+<div class="live-value" id="diskValue">
+--<span>%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="diskBar"></div>
+</div>
+
+<div class="live-detail" id="diskDetail">
+WAITING FOR DATA
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">NETWORK</div>
+
+<div class="live-value" id="networkValue">
+--
+</div>
+
+<div class="live-detail" id="networkDetail">
+CHECKING CONNECTION
+</div>
+
+</article>
+
+</section>
+
+<div class="dashboard-section-title">
+// SYSTEM INFORMATION
+</div>
+
+<section class="live-grid">
+
+<article class="live-card">
+
+<div class="live-label">HOSTNAME</div>
+
+<div class="live-value" id="hostnameValue">
+--
+</div>
+
+<div class="live-detail">
+LOCAL MACHINE
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">PLATFORM</div>
+
+<div class="live-value" id="platformValue">
+--
+</div>
+
+<div class="live-detail" id="releaseValue">
+--
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">UPTIME</div>
+
+<div class="live-value" id="uptimeValue">
+--
+</div>
+
+<div class="live-detail">
+SYSTEM UPTIME
+</div>
+
+</article>
+
+<article class="live-card">
+
+<div class="live-label">LAST UPDATE</div>
+
+<div class="live-value" id="updateValue">
+--
+</div>
+
+<div class="live-detail">
+LIVE TELEMETRY
+</div>
+
+</article>
+
+</section>
+
+<div class="dashboard-section-title">
+// LIVE SECURITY INCIDENTS
+</div>
+
+<section class="incident-panel" id="incidentPanel">
+
+<div class="incident-summary">
+
+<div class="incident-count">
+
+<span class="incident-count-label">
+TOTAL
+</span>
+
+<span
+class="incident-count-value"
+id="incidentTotal">
+0
+</span>
+
+</div>
+
+<div class="incident-count">
+
+<span class="incident-count-label">
+LOW
+</span>
+
+<span
+class="incident-count-value"
+id="incidentLow">
+0
+</span>
+
+</div>
+
+<div class="incident-count">
+
+<span class="incident-count-label">
+MEDIUM
+</span>
+
+<span
+class="incident-count-value"
+id="incidentMedium">
+0
+</span>
+
+</div>
+
+<div class="incident-count">
+
+<span class="incident-count-label">
+HIGH
+</span>
+
+<span
+class="incident-count-value high"
+id="incidentHigh">
+0
+</span>
+
+</div>
+
+</div>
+
+<div id="highAlert" class="high-alert">
+
+<span class="high-alert-icon">!</span>
+
+<span>
+HIGH RISK INCIDENT DETECTED
+</span>
+
+</div>
+
+<div
+class="incident-feed"
+id="incidentFeed">
+
+<div class="incident-empty">
+WAITING FOR INCIDENT DATA...
+</div>
+
+</div>
+
+</section>
+
+<div class="dashboard-section-title">
+// BKNVEX TOOL STATUS
+</div>
+
+<section class="tool-status-grid">
+
+<a href="tools/watchtower.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_01</span>
+<span class="tool-name">WATCHTOWER</span>
+</div>
+
+<span class="tool-ready" id="watchtowerStatus">
+READY
+</span>
+
+</a>
+
+<a href="tools/loghunter.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_02</span>
+<span class="tool-name">LOGHUNTER</span>
+</div>
+
+<span class="tool-ready" id="loghunterStatus">
+READY
+</span>
+
+</a>
+
+<a href="tools/network.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_03</span>
+<span class="tool-name">NETWORK</span>
+</div>
+
+<span class="tool-ready" id="networkToolStatus">
+READY
+</span>
+
+</a>
+
+<a href="tools/scanner.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_04</span>
+<span class="tool-name">SCANNER</span>
+</div>
+
+<span class="tool-ready" id="scannerStatus">
+READY
+</span>
+
+</a>
+
+<a href="tools/incident-reporter.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_05</span>
+<span class="tool-name">INCIDENT REPORTER</span>
+</div>
+
+<span class="tool-ready" id="incidentStatus">
+READY
+</span>
+
+</a>
+
+<a href="tools/malwarelab.html" class="tool-status-card">
+
+<div>
+<span class="tool-number">TOOL_06</span>
+<span class="tool-name">MALWARELAB</span>
+</div>
+
+<span class="tool-ready" id="malwareStatus">
+READY
+</span>
+
+</a>
+
+</section>
+
+<section class="dashboard-terminal">
+
+<div class="dashboard-terminal-top">
+
+<span class="terminal-dot"></span>
+<span class="terminal-dot"></span>
+<span class="terminal-dot"></span>
+
+<span class="dashboard-terminal-title">
+bknvex@dashboard:~
+</span>
+
+</div>
+
+<div class="dashboard-terminal-body">
+
+<div>
+
+<span class="terminal-red">
+bknvex@dashboard
+</span>:~$ live-status
+
+</div>
+
+<div class="terminal-muted">
+Connecting to local BknVex status service...
+</div>
+
+<div id="terminalOutput">
+Waiting for telemetry...
+</div>
+
+<div id="incidentTerminal">
+Waiting for incident telemetry...
+</div>
+
+<br>
+
+<div class="terminal-red">
+[BKNVEX] LIVE MONITORING ENABLED
+</div>
+
+<div>
+
+<span class="terminal-red">
+bknvex@dashboard
+</span>:~$ _
+
+</div>
+
+</div>
+
+</section>
+
+<a href="index.html" class="back-dashboard">
+← BACK TO BKNVEX HOME
+</a>
+
+</main>
+
+<footer>
+
+<div class="footer-brand">
+
+<span>Бкнпт</span>
+// BKNVEX
+
+</div>
+
+<div class="footer-status">
+
+<span></span>
+
+LIVE SYSTEM MONITOR
+
+</div>
+
+<div class="footer-copy">
+© 2026 BknVex
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+
+/* =====================================================
+   BKNVEX API
+   ===================================================== */
+
+const API =
+    "http://127.0.0.1:8765/status";
+
+const INCIDENT_API =
+    "http://127.0.0.1:8766/incidents";
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+
+function formatUptime(seconds) {
+
+    seconds = Math.floor(seconds);
+
+    const days =
+        Math.floor(seconds / 86400);
+
+    seconds %= 86400;
+
+    const hours =
+        Math.floor(seconds / 3600);
+
+    seconds %= 3600;
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        seconds % 60;
+
+    if (days > 0) {
+
+        return days + "d " + hours + "h";
+
+    }
+
+    return hours + "h " +
+           minutes + "m " +
+           secs + "s";
+
+}
+
+function setBar(elementId,value) {
+
+    const element =
+        document.getElementById(elementId);
+
+    if (!element) {
+        return;
+    }
+
+    element.style.width =
+        Math.min(
+            Math.max(value,0),
+            100
+        ) + "%";
+
+}
+
+function setToolStatus(elementId,status) {
+
+    const element =
+        document.getElementById(elementId);
+
+    if (!element) {
+        return;
+    }
+
+    element.textContent =
+        status || "UNKNOWN";
+
+}
+
+/* =====================================================
+   SYSTEM TELEMETRY
+   ===================================================== */
+
+async function updateDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                API,
+                {
+                    cache:"no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        document.getElementById(
+            "systemStatus"
+        ).textContent =
+            "SYSTEM " +
+            data.status;
+
+        document.getElementById(
+            "statusDot"
+        ).classList.remove(
+            "offline"
+        );
+
+        document.getElementById(
+            "cpuValue"
+        ).innerHTML =
+            data.cpu +
+            '<span>%</span>';
+
+        setBar(
+            "cpuBar",
+            data.cpu
+        );
+
+        document.getElementById(
+            "cpuDetail"
+        ).textContent =
+            "LIVE CPU LOAD";
+
+        document.getElementById(
+            "memoryValue"
+        ).innerHTML =
+            data.memory.percent +
+            '<span>%</span>';
+
+        setBar(
+            "memoryBar",
+            data.memory.percent
+        );
+
+        document.getElementById(
+            "memoryDetail"
+        ).textContent =
+            data.memory.used_gb +
+            " GB / " +
+            data.memory.total_gb +
+            " GB";
+
+        document.getElementById(
+            "diskValue"
+        ).innerHTML =
+            data.disk.percent +
+            '<span>%</span>';
+
+        setBar(
+            "diskBar",
+            data.disk.percent
+        );
+
+        document.getElementById(
+            "diskDetail"
+        ).textContent =
+            data.disk.used_gb +
+            " GB / " +
+            data.disk.total_gb +
+            " GB";
+
+        const networkOnline =
+            data.network.online;
+
+        document.getElementById(
+            "networkValue"
+        ).textContent =
+            networkOnline
+                ? "ONLINE"
+                : "OFFLINE";
+
+        document.getElementById(
+            "networkDetail"
+        ).textContent =
+            networkOnline
+                ? "CONNECTION ACTIVE"
+                : "NO CONNECTION";
+
+        document.getElementById(
+            "hostnameValue"
+        ).textContent =
+            data.system.hostname;
+
+        document.getElementById(
+            "platformValue"
+        ).textContent =
+            data.system.platform;
+
+        document.getElementById(
+            "releaseValue"
+        ).textContent =
+            data.system.release;
+
+        document.getElementById(
+            "uptimeValue"
+        ).textContent =
+            formatUptime(
+                data.uptime_seconds
+            );
+
+        document.getElementById(
+            "updateValue"
+        ).textContent =
+            new Date()
+                .toLocaleTimeString();
+
+        const tools =
+            data.bknvex || {};
+
+        setToolStatus(
+            "watchtowerStatus",
+            tools.watchtower
+        );
+
+        setToolStatus(
+            "loghunterStatus",
+            tools.loghunter
+        );
+
+        setToolStatus(
+            "networkToolStatus",
+            tools.network
+        );
+
+        setToolStatus(
+            "scannerStatus",
+            tools.scanner
+        );
+
+        setToolStatus(
+            "incidentStatus",
+            tools.incident_reporter
+        );
+
+        setToolStatus(
+            "malwareStatus",
+            tools.malwarelab
+        );
+
+        document.getElementById(
+            "terminalOutput"
+        ).textContent =
+            "Telemetry received // " +
+            data.system.hostname +
+            " // CPU " +
+            data.cpu +
+            "% // RAM " +
+            data.memory.percent +
+            "%";
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "BknVex status error:",
+            error
+        );
+
+        document.getElementById(
+            "systemStatus"
+        ).textContent =
+            "STATUS API OFFLINE";
+
+        document.getElementById(
+            "statusDot"
+        ).classList.add(
+            "offline"
+        );
+
+        document.getElementById(
+            "terminalOutput"
+        ).textContent =
+            "Unable to reach local BknVex status service.";
+
+    }
+
+}
+
+/* =====================================================
+   INCIDENT MONITOR + HIGH ALERT
+   ===================================================== */
+
+async function updateIncidents() {
+
+    try {
+
+        const response =
+            await fetch(
+                INCIDENT_API,
+                {
+                    cache:"no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        const incidents =
+            Array.isArray(data.incidents)
+                ? data.incidents
+                : [];
+
+        let low = 0;
+        let medium = 0;
+        let high = 0;
+
+        incidents.forEach(
+            incident => {
+
+                const risk =
+                    String(
+                        incident.risk || ""
+                    ).toUpperCase();
+
+                if (risk === "LOW") {
+                    low++;
+                }
+
+                if (risk === "MEDIUM") {
+                    medium++;
+                }
+
+                if (risk === "HIGH") {
+                    high++;
+                }
+
+            }
+        );
+
+        document.getElementById(
+            "incidentTotal"
+        ).textContent =
+            incidents.length;
+
+        document.getElementById(
+            "incidentLow"
+        ).textContent =
+            low;
+
+        document.getElementById(
+            "incidentMedium"
+        ).textContent =
+            medium;
+
+        document.getElementById(
+            "incidentHigh"
+        ).textContent =
+            high;
+
+        const alert =
+            document.getElementById(
+                "highAlert"
+            );
+
+        if (high > 0) {
+
+            alert.classList.add(
+                "active"
+            );
+
+        } else {
+
+            alert.classList.remove(
+                "active"
+            );
+
+        }
+
+        const feed =
+            document.getElementById(
+                "incidentFeed"
+            );
+
+        if (!incidents.length) {
+
+            feed.innerHTML =
+                '<div class="incident-empty">' +
+                'NO SECURITY INCIDENTS DETECTED' +
+                '</div>';
+
+            document.getElementById(
+                "incidentTerminal"
+            ).textContent =
+                "Incident telemetry // 0 incidents";
+
+            return;
+
+        }
+
+        feed.innerHTML =
+            incidents
+                .slice()
+                .reverse()
+                .map(
+                    incident => {
+
+                        const risk =
+                            String(
+                                incident.risk ||
+                                "UNKNOWN"
+                            ).toLowerCase();
+
+                        return `
+                        <div class="incident-item">
+
+                            <div class="incident-time">
+                                ${incident.time || "--:--:--"}
+                            </div>
+
+                            <div class="incident-type">
+                                ${incident.type || "UNKNOWN"}
+                            </div>
+
+                            <div class="incident-message">
+                                ${incident.message || "No message"}
+                            </div>
+
+                            <div class="incident-risk ${risk}">
+                                ${risk.toUpperCase()}
+                            </div>
+
+                        </div>
+                        `;
+
+                    }
+                )
+                .join("");
+
+        document.getElementById(
+            "incidentTerminal"
+        ).textContent =
+            "Incident telemetry // " +
+            incidents.length +
+            " total // LOW " +
+            low +
+            " // MEDIUM " +
+            medium +
+            " // HIGH " +
+            high;
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "BknVex incident error:",
+            error
+        );
+
+        document.getElementById(
+            "incidentFeed"
+        ).innerHTML =
+            '<div class="incident-empty">' +
+            'INCIDENT API OFFLINE' +
+            '</div>';
+
+        document.getElementById(
+            "highAlert"
+        ).classList.remove(
+            "active"
+        );
+
+        document.getElementById(
+            "incidentTerminal"
+        ).textContent =
+            "Unable to reach BknVex incident service.";
+
+    }
+
+}
+
+/* =====================================================
+   START
+   ===================================================== */
+
+updateDashboard();
+
+updateIncidents();
+
+setInterval(
+    updateDashboard,
+    3000
+);
+
+setInterval(
+    updateIncidents,
+    3000
+);
+
+</script>
+
+</body>
+
+</html>
+```

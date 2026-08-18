@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Бкнпт // BknVex — Cyber Security & Development"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <title>Бкнпт // BknVex</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <canvas id="rainCanvas"></canvas>
+
+    <div class="noise"></div>
+
+    <div class="scanlines"></div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+         ===================================================== -->
+
+    <header class="navbar">
+
+        <a
+            href="#home"
+            class="brand"
+        >
+            <span class="brand-cyrillic">
+                Бкнпт
+            </span>
+
+            <span class="brand-divider">
+                //
+            </span>
+
+            <span class="brand-latin">
+                BKNVEX
+            </span>
+        </a>
+
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Open navigation"
+            type="button"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+
+        <nav
+            class="nav-links"
+            id="navLinks"
+        >
+            <a href="#home">
+                HOME
+            </a>
+
+            <a href="#tools">
+                TOOLS
+            </a>
+
+            <a href="#projects">
+                PROJECTS
+            </a>
+
+            <a href="#about">
+                ABOUT
+            </a>
+
+            <a href="#contact">
+                CONTACT
+            </a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <div class="hero-content">
+
+                <div class="status-line">
+                    <span class="status-dot"></span>
+                    SYSTEM ONLINE
+                </div>
+
+
+                <div class="hero-kicker">
+                    Бкнпт
+                    <span>//</span>
+                    BKNVEX
+                </div>
+
+
+                <h1>
+                    CYBER
+                    <br>
+                    <span>SECURITY</span>
+                    <br>
+                    &amp; DEVELOPMENT
+                </h1>
+
+
+                <p class="hero-description">
+                    Defensive security tools, controlled
+                    laboratories and experimental software
+                    built from the ground up.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="#tools"
+                        class="button button-primary"
+                    >
+                        ENTER BKNVEX
+                        <span>→</span>
+                    </a>
+
+
+                    <a
+                        href="#about"
+                        class="button button-secondary"
+                    >
+                        LEARN MORE
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-side">
+
+                <div class="side-label">
+                    // CURRENT BUILD
+                </div>
+
+                <div class="side-value">
+                    BKNVEX V2
+                </div>
+
+
+                <div class="side-label">
+                    // STATUS
+                </div>
+
+                <div class="side-value active">
+                    OPERATIONAL
+                </div>
+
+            </div>
+
+
+            <div class="scroll-indicator">
+
+                <span>
+                    SCROLL
+                </span>
+
+                <div></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TOOLS
+             ================================================= -->
+
+        <section
+            class="section"
+            id="tools"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <div>
+
+                    <div class="section-label">
+                        // SECURITY TOOLKIT
+                    </div>
+
+                    <h2>
+                        BKNVEX
+                        <span>TOOLS</span>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="tools-grid">
+
+                <!-- WATCHTOWER -->
+
+                <a
+                    href="tools/watchtower.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        01
+                    </div>
+
+                    <div class="tool-icon">
+                        ◉
+                    </div>
+
+                    <h3>
+                        WATCHTOWER
+                    </h3>
+
+                    <p>
+                        System monitoring and defensive
+                        security observation.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+
+                <!-- LOGHUNTER -->
+
+                <a
+                    href="tools/loghunter.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        02
+                    </div>
+
+                    <div class="tool-icon">
+                        #
+                    </div>
+
+                    <h3>
+                        LOGHUNTER
+                    </h3>
+
+                    <p>
+                        Security log analysis and event
+                        investigation.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+
+                <!-- NETWORK -->
+
+                <a
+                    href="tools/network.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        03
+                    </div>
+
+                    <div class="tool-icon">
+                        ⌁
+                    </div>
+
+                    <h3>
+                        NETWORK
+                    </h3>
+
+                    <p>
+                        Defensive network diagnostics and
+                        connectivity analysis.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+
+                <!-- SCANNER -->
+
+                <a
+                    href="tools/scanner.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        04
+                    </div>
+
+                    <div class="tool-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        SCANNER
+                    </h3>
+
+                    <p>
+                        Controlled service discovery and
+                        security assessment.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+
+                <!-- INCIDENT REPORTER -->
+
+                <a
+                    href="tools/incident-reporter.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        05
+                    </div>
+
+                    <div class="tool-icon">
+                        !
+                    </div>
+
+                    <h3>
+                        INCIDENT REPORTER
+                    </h3>
+
+                    <p>
+                        Structured security incidents,
+                        severity and reporting.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+
+                <!-- MALWARELAB -->
+
+                <a
+                    href="tools/malwarelab.html"
+                    class="tool-card"
+                >
+
+                    <div class="tool-number">
+                        06
+                    </div>
+
+                    <div class="tool-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        MALWARELAB
+                    </h3>
+
+                    <p>
+                        Controlled malware-analysis and
+                        defensive research laboratory.
+                    </p>
+
+                    <div class="tool-footer">
+                        OPEN TOOL
+                        <span>→</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROJECTS
+             ================================================= -->
+
+        <section
+            class="section projects-section"
+            id="projects"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <div>
+
+                    <div class="section-label">
+                        // ACTIVE DEVELOPMENT
+                    </div>
+
+                    <h2>
+                        SELECTED
+                        <span>PROJECTS</span>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="projects-grid">
+
+                <article class="project-card featured">
+
+                    <div class="project-top">
+
+                        <span>
+                            PROJECT_001
+                        </span>
+
+                        <span>
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        BKNVEX
+                    </h3>
+
+
+                    <p>
+                        A growing cybersecurity toolkit
+                        combining defensive monitoring,
+                        analysis and controlled testing
+                        environments.
+                    </p>
+
+
+                    <div class="project-tags">
+
+                        <span>
+                            SECURITY
+                        </span>
+
+                        <span>
+                            PYTHON
+                        </span>
+
+                        <span>
+                            POWERSHELL
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-top">
+
+                        <span>
+                            PROJECT_002
+                        </span>
+
+                        <span>
+                            LAB
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        SECURITY LAB
+                    </h3>
+
+
+                    <p>
+                        Isolated environments for learning,
+                        testing and understanding defensive
+                        cybersecurity concepts.
+                    </p>
+
+
+                    <div class="project-tags">
+
+                        <span>
+                            LAB
+                        </span>
+
+                        <span>
+                            LINUX
+                        </span>
+
+                        <span>
+                            WINDOWS
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-top">
+
+                        <span>
+                            PROJECT_003
+                        </span>
+
+                        <span>
+                            DEV
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        EXPERIMENTAL
+                    </h3>
+
+
+                    <p>
+                        Small software experiments,
+                        interfaces and cybersecurity
+                        projects built while learning.
+                    </p>
+
+
+                    <div class="project-tags">
+
+                        <span>
+                            CODE
+                        </span>
+
+                        <span>
+                            UI
+                        </span>
+
+                        <span>
+                            RESEARCH
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+             ================================================= -->
+
+        <section
+            class="section about-section"
+            id="about"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <div>
+
+                    <div class="section-label">
+                        // THE PROJECT
+                    </div>
+
+                    <h2>
+                        ABOUT
+                        <span>BKNVEX</span>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="about-layout">
+
+                <div class="about-large">
+
+                    <p>
+                        <strong>
+                            BknVex
+                        </strong>
+                        is a personal cybersecurity and
+                        development project focused on
+                        learning by building.
+                    </p>
+
+
+                    <p>
+                        The goal is simple:
+                        <span>
+                            understand how systems work,
+                            build useful defensive tools,
+                            and experiment inside controlled
+                            environments.
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <div class="about-terminal">
+
+                    <div class="terminal-bar">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                        <label>
+                            bknvex@system:~
+                        </label>
+
+                    </div>
+
+
+                    <div class="terminal-body">
+
+                        <p>
+                            <span class="terminal-red">
+                                user
+                            </span>@bknvex:~$
+                        </p>
+
+                        <p class="terminal-output">
+                            whoami
+                        </p>
+
+                        <p>
+                            builder
+                        </p>
+
+                        <p class="terminal-output">
+                            mission
+                        </p>
+
+                        <p>
+                            learn // build // secure
+                        </p>
+
+                        <p>
+                            <span class="terminal-red">
+                                █
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTACT
+             ================================================= -->
+
+        <section
+            class="contact-section"
+            id="contact"
+        >
+
+            <div class="contact-content">
+
+                <div class="section-label">
+                    // ESTABLISH CONNECTION
+                </div>
+
+
+                <h2>
+                    GOT A
+                    <span>PROJECT?</span>
+                </h2>
+
+
+                <p>
+                    For questions, collaboration or
+                    cybersecurity projects:
+                </p>
+
+
+                <a
+                    href="mailto:bknpt@proton.me"
+                    class="email-link"
+                >
+                    bknpt@proton.me
+
+                    <span>
+                        →
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        <div class="footer-brand">
+
+            <span>
+                Бкнпт
+            </span>
+
+            //
+
+            BKNVEX
+
+        </div>
+
+
+        <div class="footer-status">
+
+            <span></span>
+
+            ALL SYSTEMS OPERATIONAL
+
+        </div>
+
+
+        <div class="footer-copy">
+            © 2026 BknVex
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
